@@ -1,0 +1,35 @@
+{% extends "material/base.html" %}
+
+{% block styles %}
+{{ super() }}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block content %}
+
+<nav class="blue lighten-2">
+    <div class="nav-wrapper">
+      <a href="{{url_for('core.index')}}" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      	<li><a href="{{url_for('core.info')}}">About Us</a></li>        
+        {% if current_user.is_authenticated %}
+        	<li><a href="{{url_for('blog_posts.create_post')}}">Create</a></li>
+        	<li><a href="{{url_for('users.account')}}">Account</a></li>
+        	<li><a href="{{url_for('users.logout')}}">Logout</a></li>
+        {% else %}
+	        <li><a href="{{url_for('users.login')}}">Login</a></li>
+	        <li><a href="{{url_for('users.signup')}}">Signup</a></li>
+	    {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+ 
+
+
+  
+
+
+{% endblock %}
