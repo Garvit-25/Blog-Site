@@ -3,6 +3,7 @@
 {% block styles %}
 {{ super() }}
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_blog_posts.css') }}">
 <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
@@ -11,7 +12,7 @@
 
 <nav class="blue lighten-2">
     <div class="nav-wrapper">
-      <a href="{{url_for('core.index')}}" class="brand-logo"><img src="{{url_for('static',filename='/images/logo.png')}}"></a>
+      <a href="{{url_for('core.index')}}" class="brand-logo"><i class="tiny material-icons left">home</i>Home</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
       	<li><a href="{{url_for('core.info')}}" ><i class="tiny material-icons left">info</i>About Us</a></li>        
         {% if current_user.is_authenticated %}
@@ -25,11 +26,69 @@
       </ul>
     </div>
   </nav>
-
- 
-
-
+<div class="section grey lighten-4">
+  <div class="row valign-wrapper">
+    <div class="col s6 offset-s3 valign-wrapper">
+      <div class="col s0.5">
+      <img class="responsive-img" src="{{url_for('static',filename='/images/logo.png')}}">
+    </div>
+    <div class="col s11.5">
+      <h2>Blog's Heaven</h2>
+    </div>
+    </div>
+    
+    
+    
+  </div>
   
+</div>
+
+  <div class="section grey lighten-4">
+    {% for post in blog_posts.items %}
+    <div class="row">
+      <div class="col s6 offset-s3">
+      <div class="card white">
+        <div class="card-content grey lighten-4">
+          <span class="card-title"><a href="{{url_for('blog_posts.blog_post',blog_post_id=post.id)}}">{{post.title}}</a></span>
+          <p>{{post.text[:50]}}</p>
+        </div>
+
+        <div class="card-action">
+          <div class="col s4">
+            <p>Written by : <a href="{{url_for('users.user_posts',username=post.author.username)}}">{{post.author.username}}</a></p>
+          </div>
+          <div class="col s4">
+            <p>Published on : {{post.date.strftime('%Y-%m-%d') }}</p>
+          </div>
+          <div class="col s4">
+            <p><a href="{{url_for('blog_posts.blog_post',blog_post_id=post.id)}}">Read Post</a></p>
+          </div>
+         
+        </div>
+        
+      </div>
+    </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="section grey lighten-4">
+  <ul class="pagination">
+    {% if blog_posts.page ==1 %}
+      <li class="disabled"><a href="{{url_for('core.index',page=blog_posts.page-1)}}"><i class="material-icons">chevron_left</i></a></li>
+    {% else %}
+      <li><a href="{{url_for('core.index',page=blog_posts.page-1)}}"><i class="material-icons">chevron_left</i></a></li>
+    {% endif %}
+
+    {% for num in blog_posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %} 
+      {% if blog_posts.page == num %}
+        <li class="active"><a href="{{url_for('core.index',page=num)}}">{{num}}</a></li>
+      {% else %}
+        <li class="waves-effect"><a href="{{url_for('core.index',page=num)}}">{{num}}</a></li>
+      {% endif %}
+    {% endfor %}
+    <li class="waves-effect"><a href="{{url_for('core.index',page=blog_posts.page+1)}}"><i class="material-icons">chevron_right</i></a></li>
+  </ul> 
+</div>
 
 
 {% endblock %}

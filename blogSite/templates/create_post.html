@@ -12,7 +12,7 @@
 
 <nav class="blue lighten-2">
     <div class="nav-wrapper">
-      <a href="{{url_for('core.index')}}" class="brand-logo"><img src="{{url_for('static',filename='/images/logo.png')}}"></a>
+      <a href="{{url_for('core.index')}}" class="brand-logo"><i class="tiny material-icons left">home</i>Home</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="{{url_for('core.info')}}" ><i class="tiny material-icons left">info</i>About Us</a></li>        
         {% if current_user.is_authenticated %}
