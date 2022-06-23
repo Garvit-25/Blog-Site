@@ -2,6 +2,8 @@
 
 {% block styles %}
 {{ super() }}
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='/css/user_blog_posts.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='/css/account.css')}}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -64,21 +66,31 @@
           <label for="title">Username</label>
         </div>
 
-        <div class="row">
-        <div class="file-field input-field col s12">
+        
+        <!-- <div class="file-field input-field col s12">
 	      <div class="btn">
 	        <span>Upload <i class="material-icons right">upload</i></span>
-	        <!-- <input type="file"> -->
+	        <input type="file">
 	        {{ form.picture(type='file') }}
 	      </div>
 	      <div class="file-path-wrapper col s12">
-	        <!-- <input class="file-path validate" type="text"> -->
+	        <input class="file-path validate" type="text">
 	        {{ form.picture(class='file-path validate',type='text') }}
 	      </div>
+    	</div> -->
+      <div class="row">
+       <div class='file file--upload col s12'>
+          <label for='input-file'>
+            <i class="material-icons">cloud_upload</i>Upload
+          </label>
+          <!-- <input id='input-file' type='file' /> -->
+          
+          {{ form.picture(id='input-file',type='file') }}
+        </div>
     	</div>
-    	</div>
+    </div>
 
-        <div class="col s12 offset-s5">
+        <div class="col s2 offset-s5">
           
           <button class="btn waves-effect waves-light large" type="submit" name="update_value" value="update">Update<i class="material-icons right">update</i> </button>
         </div> 
@@ -88,5 +100,34 @@
       
     </div>
   </div>
+
+  <footer class="page-footer white">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="black-text">Blog's Heaven</h5>
+                <p class="grey-text text-darken-1">A blogging site for everybody.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="black-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-darken-1" href="{{url_for('core.index')}}"><i class="tiny material-icons left">home</i>Home</a></li>
+                  <li><a class="grey-text text-darken-1" href="{{url_for('core.info')}}"><i class="tiny material-icons left">info</i>About us</a></li>
+                  {% if current_user.is_authenticated %}
+                    <li><a class="grey-text text-darken-1" href="{{url_for('users.account')}}"><i class="tiny material-icons left">account_circle</i>Account</a></li>
+                  {% else %}
+                    <li><a class="grey-text text-darken-1" href="{{url_for('users.login')}}"><i class="tiny material-icons left">login</i>Login</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright black-text white">
+            <div class="container">
+            © 2022 Copyright
+            </div>
+          </div>
+        </footer>
+
 
 {% endblock %}

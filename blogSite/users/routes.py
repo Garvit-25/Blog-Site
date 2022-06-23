@@ -1,4 +1,4 @@
-from flask import render_template,url_for,flash,redirect,request,Blueprint
+from flask import render_template,url_for,flash,redirect,request,Blueprint,abort
 from flask_login import login_user,current_user,logout_user,login_required
 from blogSite import db
 from blogSite.models import User,BlogPost
@@ -53,11 +53,13 @@ def account():
 
 	if request.method=='POST':
 		if request.form.get('update_value') == 'update':
-			pic = current_user.profile_image
+			#pic = current_user.profile_image
 			
 			if form.picture.data:
+				print("hain")
 				username = current_user.username
 				pic = add_profile_pic(form.picture.data,username)
+				print(pic)
 				current_user.profile_image = pic
 
 			current_user.username = form.username.data
@@ -76,6 +78,7 @@ def account():
 	return render_template('account.html',profile_image=profile_image,form=form)
 
 @users.route("/<username>")
+@login_required
 def user_posts(username):
 	page = request.args.get('page',1,type=int)
 	user = User.query.filter_by(username=username).first_or_404()
