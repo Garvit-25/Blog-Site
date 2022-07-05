@@ -9,3 +9,7 @@
 .clr{
     color: #ffab40;
 }
+
+.round{
+    border-radius: 5%;
+}
